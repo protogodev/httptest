@@ -1,0 +1,118 @@
+server: usersvc.NewHTTPServer
+
+tests:
+- name: GetUser
+  subtests:
+  - name: ok
+    request:
+      method: GET
+      path: /users/foo
+    wantIn:
+      name: foo
+    out:
+      user: {name: foo, sex: male, birth: 2022-01-01T00:00:00Z}
+      err: ''
+    wantResponse:
+      statusCode: http.StatusOK
+      body: '{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}'
+  - name: err
+    request:
+      method: GET
+      path: /users/foo
+    wantIn:
+      name: foo
+    out:
+      user: null
+      err: 'not found'
+    wantResponse:
+      statusCode: http.StatusBadRequest
+      body: '{"error":"not found"}'
+- name: ListUsers
+  subtests:
+  - name: ok
+    request:
+      method: GET
+      path: /users
+    wantIn:
+    out:
+      users:
+      - {name: foo, sex: male, birth: 2022-01-01T00:00:00Z}
+      err: ''
+    wantResponse:
+      statusCode: http.StatusOK
+      body: '{"users":[{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}]}'
+- name: CreateUser
+  subtests:
+  - name: ok
+    request:
+      method: POST
+      path: /users
+      body: '{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}'
+    wantIn:
+      user: {name: foo, sex: male, birth: 2022-01-01T00:00:00Z}
+    out:
+      err: ''
+    wantResponse:
+      statusCode: http.StatusNoContent
+  - name: err
+    request:
+      method: POST
+      path: /users
+      body: '{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}'
+    wantIn:
+      user: {name: foo, sex: male, birth: 2022-01-01T00:00:00Z}
+    out:
+      err: 'already exists'
+    wantResponse:
+      statusCode: http.StatusBadRequest
+      body: '{"error":"already exists"}'
+- name: UpdateUser
+  subtests:
+  - name: ok
+    request:
+      method: PATCH
+      path: /users/foo
+      body: '{"sex":"male","birth":"2022-01-01T00:00:00Z"}'
+    wantIn:
+      name: foo
+      user: {sex: male, birth: 2022-01-01T00:00:00Z}
+    out:
+      err: ''
+    wantResponse:
+      statusCode: http.StatusNoContent
+  - name: err
+    request:
+      method: PATCH
+      path: /users/foo
+      body: '{"sex":"male","birth":"2022-01-01T00:00:00Z"}'
+    wantIn:
+      name: foo
+      user: {sex: male, birth: 2022-01-01T00:00:00Z}
+    out:
+      err: 'not found'
+    wantResponse:
+      statusCode: http.StatusBadRequest
+      body: '{"error":"not found"}'
+- name: DeleteUser
+  subtests:
+  - name: ok
+    request:
+      method: DELETE
+      path: /users/foo
+    wantIn:
+      name: foo
+    out:
+      err: ''
+    wantResponse:
+      statusCode: http.StatusNoContent
+  - name: err
+    request:
+      method: DELETE
+      path: /users/foo
+    wantIn:
+      name: foo
+    out:
+      err: 'not found'
+    wantResponse:
+      statusCode: http.StatusBadRequest
+      body: '{"error":"not found"}'
