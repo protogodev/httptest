@@ -22,10 +22,10 @@ func init() {
 }
 
 type Generator struct {
+	Mode             string `name:"mode" required:"" enum:"server,client" help:"generation mode (server or client)"`
+	TestSpecFileName string `name:"spec" required:"" help:"the test specification in YAML"`
 	OutFileName      string `name:"out" help:"output filename (default \"./<srcPkgName>_<mode>_test.go\")"`
 	Formatted        bool   `name:"fmt" default:"true" help:"whether to make the test code formatted"`
-	TestSpecFileName string `name:"spec" required:"" help:"the test specification in YAML"`
-	Mode             string `name:"mode" required:"" enum:"server,client" help:"generation mode (server or client)"`
 }
 
 func (g *Generator) Generate(data *ifacetool.Data) (*generator.File, error) {

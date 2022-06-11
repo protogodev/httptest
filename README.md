@@ -1,13 +1,19 @@
 # dbtest
 
-HTTP testing made easy for layered applications in Go.
+HTTP testing made easy for layered Web applications in Go.
 
 
-## Layered Applications
+## Layered Web Applications
+
+Non-trivial applications should be [layered][1].
 
 ![layered-app](layered-app.png)
 
-See [the Clean Architecture][1] for details.
+For layered Web applications:
+
+- HTTP Server/Client should be separated from Service (the business rules)
+- HTTP Server should depend on an interface designed by Service
+- HTTP Client should implement an interface designed by Service
 
 
 ## Installation
@@ -23,7 +29,7 @@ $ protogo build --plugin=github.com/protogodev/httptest
 
 ```bash
 $ protogo httptest -h
-Usage: protogo httptest --spec=STRING --mode=STRING <source-file> <interface-name>
+Usage: protogo httptest --mode=STRING --spec=STRING <source-file> <interface-name>
 
 Arguments:
   <source-file>       source-file
@@ -32,12 +38,11 @@ Arguments:
 Flags:
   -h, --help           Show context-sensitive help.
 
+      --mode=STRING    generation mode (server or client)
+      --spec=STRING    the test specification in YAML
       --out=STRING     output filename (default "./<srcPkgName>_<mode>_test.go")
       --fmt            whether to make the test code formatted
-      --spec=STRING    the test specification in YAML
-      --mode=STRING    generation mode (server or client)
 ```
-
 </details>
 
 
