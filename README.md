@@ -24,6 +24,12 @@ Make a custom build of [protogo](https://github.com/protogodev/protogo):
 $ protogo build --plugin=github.com/protogodev/httptest
 ```
 
+Or build from a local fork:
+
+```bash
+$ protogo build --plugin=github.com/protogodev/httptest=../my-fork
+```
+
 <details open>
   <summary> Usage </summary>
 
