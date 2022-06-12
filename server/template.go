@@ -29,7 +29,7 @@ import (
 
 {{- $srcPkgPrefix := $.Data.SrcPkgQualifier}}
 {{- $interfaceName := $.Data.InterfaceName}}
-{{- $mockInterfaceName := printf "%sServerMock" $interfaceName}}
+{{- $mockInterfaceName := printf "%sMock" $interfaceName}}
 
 {{- if $.Spec.Codec}}
 var serverCodec = {{$.Spec.Codec}}

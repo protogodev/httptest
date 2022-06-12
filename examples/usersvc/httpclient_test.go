@@ -161,7 +161,7 @@ func TestHTTPClient_GetUser(t *testing.T) {
 				gotRequest = req
 				return tt.response.HTTPResponse(), nil
 			})
-			sut, err := usersvc.NewHTTPClient(httpClient, "http://localhost:80")
+			sut, err := usersvc.NewHTTPClient(httpClient, "http://localhost:8080")
 			if err != nil {
 				t.Errorf("err when creating Client: %v", err)
 			}
@@ -233,7 +233,7 @@ func TestHTTPClient_ListUsers(t *testing.T) {
 				gotRequest = req
 				return tt.response.HTTPResponse(), nil
 			})
-			sut, err := usersvc.NewHTTPClient(httpClient, "http://localhost:80")
+			sut, err := usersvc.NewHTTPClient(httpClient, "http://localhost:8080")
 			if err != nil {
 				t.Errorf("err when creating Client: %v", err)
 			}
@@ -319,7 +319,7 @@ func TestHTTPClient_CreateUser(t *testing.T) {
 				gotRequest = req
 				return tt.response.HTTPResponse(), nil
 			})
-			sut, err := usersvc.NewHTTPClient(httpClient, "http://localhost:80")
+			sut, err := usersvc.NewHTTPClient(httpClient, "http://localhost:8080")
 			if err != nil {
 				t.Errorf("err when creating Client: %v", err)
 			}
@@ -406,7 +406,7 @@ func TestHTTPClient_UpdateUser(t *testing.T) {
 				gotRequest = req
 				return tt.response.HTTPResponse(), nil
 			})
-			sut, err := usersvc.NewHTTPClient(httpClient, "http://localhost:80")
+			sut, err := usersvc.NewHTTPClient(httpClient, "http://localhost:8080")
 			if err != nil {
 				t.Errorf("err when creating Client: %v", err)
 			}
@@ -490,7 +490,7 @@ func TestHTTPClient_DeleteUser(t *testing.T) {
 				gotRequest = req
 				return tt.response.HTTPResponse(), nil
 			})
-			sut, err := usersvc.NewHTTPClient(httpClient, "http://localhost:80")
+			sut, err := usersvc.NewHTTPClient(httpClient, "http://localhost:8080")
 			if err != nil {
 				t.Errorf("err when creating Client: %v", err)
 			}

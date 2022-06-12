@@ -1,24 +1,6 @@
-# User Store
+# usersvc
 
-This example illustrates how to apply declarative testing for a typical HTTP application.
-
-
-## Run the server/client
-
-Run the server:
-
-```bash
-$ go run cmd/server/main.go
-2022/06/11 22:47:01 transport=HTTP addr=:8080
-```
-
-Run the client:
-
-```bash
-$ go run cmd/client/main.go
-2022/06/11 22:47:03 GetUser ok: &{Name:foo Sex:male Birth:2022-01-01 00:00:00 +0000 UTC}
-2022/06/11 22:47:03 ListUsers ok: [&{Name:foo Sex:female Birth:2022-01-01 00:00:00 +0000 UTC}]
-```
+This example illustrates how to apply HTTP testing for a layered Web application.
 
 
 ## Prerequisites
@@ -29,7 +11,7 @@ $ go run cmd/client/main.go
 
 2. Write the test specification for the HTTP client
 
-   See [httptest.client.yaml](httptest.client.yaml).
+    See [httptest.client.yaml](httptest.client.yaml).
 
 
 ## Generate tests
@@ -40,8 +22,8 @@ $ go generate
 
 Generated tests:
 
-- [HTTP server tests](usersvc_server_test.go)
-- [HTTP client tests](usersvc_client.go)
+- [httpserver_test.go](httpserver_test.go)
+- [httpclient_test.go](httpclient_test.go)
 
 
 ## Run tests
@@ -115,3 +97,21 @@ ok      github.com/protogodev/httptest/examples/usersvc 0.043s
 ```
 
 </details>
+
+
+## Run the server/client
+
+Run the server:
+
+```bash
+$ go run cmd/server/main.go
+2022/06/11 22:47:01 transport=HTTP addr=:8080
+```
+
+Run the client:
+
+```bash
+$ go run cmd/client/main.go
+2022/06/11 22:47:03 GetUser ok: &{Name:foo Sex:male Birth:2022-01-01 00:00:00 +0000 UTC}
+2022/06/11 22:47:03 ListUsers ok: [&{Name:foo Sex:female Birth:2022-01-01 00:00:00 +0000 UTC}]
+```

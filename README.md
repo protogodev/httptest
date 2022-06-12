@@ -1,4 +1,4 @@
-# dbtest
+# httptest
 
 HTTP testing made easy for layered Web applications in Go.
 
@@ -11,9 +11,9 @@ Non-trivial applications should be [layered][1].
 
 For layered Web applications:
 
-- HTTP Server/Client should be separated from Service (the business rules)
-- HTTP Server should depend on an interface designed by Service
-- HTTP Client should implement an interface designed by Service
+- HTTP Server/Client should be separated from Service (i.e. the business rules)
+- HTTP Server should call an interface implemented by Service
+- HTTP Client should implement an interface defined in Service
 
 
 ## Installation

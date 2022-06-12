@@ -31,10 +31,10 @@ var serverCodec = structool.New().TagName("httptest").
 		structool.EncodeDurationToString,
 	)
 
-// Ensure that ServiceServerMock does implement usersvc.Service.
-var _ usersvc.Service = &ServiceServerMock{}
+// Ensure that ServiceMock does implement usersvc.Service.
+var _ usersvc.Service = &ServiceMock{}
 
-type ServiceServerMock struct {
+type ServiceMock struct {
 	CreateUserFunc func(ctx context.Context, user *usersvc.User) (err error)
 	DeleteUserFunc func(ctx context.Context, name string) (err error)
 	GetUserFunc    func(ctx context.Context, name string) (user *usersvc.User, err error)
@@ -42,37 +42,37 @@ type ServiceServerMock struct {
 	UpdateUserFunc func(ctx context.Context, name string, user *usersvc.User) (err error)
 }
 
-func (mock *ServiceServerMock) CreateUser(ctx context.Context, user *usersvc.User) (err error) {
+func (mock *ServiceMock) CreateUser(ctx context.Context, user *usersvc.User) (err error) {
 	if mock.CreateUserFunc == nil {
-		panic("ServiceServerMock.CreateUserFunc: not implemented")
+		panic("ServiceMock.CreateUserFunc: not implemented")
 	}
 	return mock.CreateUserFunc(ctx, user)
 }
 
-func (mock *ServiceServerMock) DeleteUser(ctx context.Context, name string) (err error) {
+func (mock *ServiceMock) DeleteUser(ctx context.Context, name string) (err error) {
 	if mock.DeleteUserFunc == nil {
-		panic("ServiceServerMock.DeleteUserFunc: not implemented")
+		panic("ServiceMock.DeleteUserFunc: not implemented")
 	}
 	return mock.DeleteUserFunc(ctx, name)
 }
 
-func (mock *ServiceServerMock) GetUser(ctx context.Context, name string) (user *usersvc.User, err error) {
+func (mock *ServiceMock) GetUser(ctx context.Context, name string) (user *usersvc.User, err error) {
 	if mock.GetUserFunc == nil {
-		panic("ServiceServerMock.GetUserFunc: not implemented")
+		panic("ServiceMock.GetUserFunc: not implemented")
 	}
 	return mock.GetUserFunc(ctx, name)
 }
 
-func (mock *ServiceServerMock) ListUsers(ctx context.Context) (users []*usersvc.User, err error) {
+func (mock *ServiceMock) ListUsers(ctx context.Context) (users []*usersvc.User, err error) {
 	if mock.ListUsersFunc == nil {
-		panic("ServiceServerMock.ListUsersFunc: not implemented")
+		panic("ServiceMock.ListUsersFunc: not implemented")
 	}
 	return mock.ListUsersFunc(ctx)
 }
 
-func (mock *ServiceServerMock) UpdateUser(ctx context.Context, name string, user *usersvc.User) (err error) {
+func (mock *ServiceMock) UpdateUser(ctx context.Context, name string, user *usersvc.User) (err error) {
 	if mock.UpdateUserFunc == nil {
-		panic("ServiceServerMock.UpdateUserFunc: not implemented")
+		panic("ServiceMock.UpdateUserFunc: not implemented")
 	}
 	return mock.UpdateUserFunc(ctx, name, user)
 }
@@ -200,7 +200,7 @@ func TestHTTPServer_GetUser(t *testing.T) {
 			}
 
 			var gotIn in
-			svc := &ServiceServerMock{
+			svc := &ServiceMock{
 				GetUserFunc: func(ctx context.Context, name string) (user *usersvc.User, err error) {
 					gotIn = in{
 						Name: name,
@@ -268,7 +268,7 @@ func TestHTTPServer_ListUsers(t *testing.T) {
 			}
 
 			var gotIn in
-			svc := &ServiceServerMock{
+			svc := &ServiceMock{
 				ListUsersFunc: func(ctx context.Context) (users []*usersvc.User, err error) {
 					gotIn = in{}
 					return out.Users, out.Err
@@ -348,7 +348,7 @@ func TestHTTPServer_CreateUser(t *testing.T) {
 			}
 
 			var gotIn in
-			svc := &ServiceServerMock{
+			svc := &ServiceMock{
 				CreateUserFunc: func(ctx context.Context, user *usersvc.User) (err error) {
 					gotIn = in{
 						User: user,
@@ -431,7 +431,7 @@ func TestHTTPServer_UpdateUser(t *testing.T) {
 			}
 
 			var gotIn in
-			svc := &ServiceServerMock{
+			svc := &ServiceMock{
 				UpdateUserFunc: func(ctx context.Context, name string, user *usersvc.User) (err error) {
 					gotIn = in{
 						Name: name,
@@ -512,7 +512,7 @@ func TestHTTPServer_DeleteUser(t *testing.T) {
 			}
 
 			var gotIn in
-			svc := &ServiceServerMock{
+			svc := &ServiceMock{
 				DeleteUserFunc: func(ctx context.Context, name string) (err error) {
 					gotIn = in{
 						Name: name,

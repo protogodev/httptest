@@ -188,7 +188,7 @@ func TestHTTPClient_{{.Name}}(t *testing.T) {
 				gotRequest = req
 				return tt.response.HTTPResponse(), nil
 			})
-			sut, err := {{$.Spec.Client}}(httpClient, "http://localhost:80")
+			sut, err := {{$.Spec.Client}}(httpClient, "http://localhost:8080")
 			if err != nil {
 				t.Errorf("err when creating Client: %v", err)
 			}

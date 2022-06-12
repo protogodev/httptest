@@ -37,11 +37,7 @@ func (c *HTTPClient) GetUser(ctx context.Context, name string) (user *User, err 
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		respErr, err := jsonToError(resp.Body)
-		if err == nil {
-			return nil, respErr
-		}
-		return nil, err
+		return nil, jsonToError(resp.Body)
 	}
 
 	user = new(User)
@@ -66,11 +62,7 @@ func (c *HTTPClient) ListUsers(ctx context.Context) (users []*User, err error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		respErr, err := jsonToError(resp.Body)
-		if err == nil {
-			return nil, respErr
-		}
-		return nil, err
+		return nil, jsonToError(resp.Body)
 	}
 
 	var out = struct {
@@ -100,11 +92,7 @@ func (c *HTTPClient) CreateUser(ctx context.Context, user *User) (err error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusNoContent {
-		respErr, err := jsonToError(resp.Body)
-		if err == nil {
-			return respErr
-		}
-		return err
+		return jsonToError(resp.Body)
 	}
 
 	return nil
@@ -128,11 +116,7 @@ func (c *HTTPClient) UpdateUser(ctx context.Context, name string, user *User) (e
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusNoContent {
-		respErr, err := jsonToError(resp.Body)
-		if err == nil {
-			return respErr
-		}
-		return err
+		return jsonToError(resp.Body)
 	}
 
 	return nil
@@ -152,25 +136,21 @@ func (c *HTTPClient) DeleteUser(ctx context.Context, name string) (err error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusNoContent {
-		respErr, err := jsonToError(resp.Body)
-		if err == nil {
-			return respErr
-		}
-		return err
+		return jsonToError(resp.Body)
 	}
 
 	return nil
 }
 
-func jsonToError(r io.Reader) (respErr, err error) {
+func jsonToError(r io.Reader) error {
 	var resp map[string]string
 	if err := json.NewDecoder(r).Decode(&resp); err != nil {
-		return nil, err
+		return err
 	}
 
 	errorStr := resp["error"]
 	if errorStr == "" {
-		return nil, nil
+		return nil
 	}
-	return errors.New(errorStr), nil
+	return errors.New(errorStr)
 }
