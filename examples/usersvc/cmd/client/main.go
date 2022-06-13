@@ -14,13 +14,10 @@ func main() {
 	baseURL := flag.String("url", "http://localhost:8080", "The base URL")
 	flag.Parse()
 
-	client, err := usersvc.NewHTTPClient(
+	client := usersvc.NewHTTPClient(
 		&http.Client{Timeout: 10 * time.Second},
 		*baseURL,
 	)
-	if err != nil {
-		log.Fatalf("NewHTTPClient err: %v\n", err)
-	}
 
 	u := &usersvc.User{
 		Name:  "foo",

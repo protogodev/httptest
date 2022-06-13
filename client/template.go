@@ -49,12 +49,12 @@ var clientCodec = structool.New().TagName("httptest").
 type RoundTripFunc func(req *http.Request) (*http.Response, error)
 
 func (f RoundTripFunc) RoundTrip(req *http.Request) (*http.Response, error) {
-        return f(req)
+	return f(req)
 }
 
-// NewTestClient creates a new *http.Client with Transport mocked.
-func NewTestHTTPClient(fn RoundTripFunc) *http.Client {
-        return &http.Client{Transport: fn}
+// newTestHTTPClient creates a new *http.Client with Transport mocked.
+func newTestHTTPClient(fn RoundTripFunc) *http.Client {
+	return &http.Client{Transport: fn}
 }
 
 type ClientRequest struct {
@@ -183,15 +183,13 @@ func TestHTTPClient_{{.Name}}(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			newClient := {{$.Spec.Client}}
+
 			var gotRequest *http.Request
-			httpClient := NewTestHTTPClient(func(req *http.Request) (*http.Response, error) {
+			sut := newClient(newTestHTTPClient(func(req *http.Request) (*http.Response, error) {
 				gotRequest = req
 				return tt.response.HTTPResponse(), nil
-			})
-			sut, err := {{$.Spec.Client}}(httpClient, "http://localhost:8080")
-			if err != nil {
-				t.Errorf("err when creating Client: %v", err)
-			}
+			}))
 
 			var in in
 			if err := serverCodec.Decode(tt.in, &in); err != nil {

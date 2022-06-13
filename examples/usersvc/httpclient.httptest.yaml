@@ -1,4 +1,7 @@
-handler: usersvc.NewHTTPClient
+client: |
+  func(httpClient *http.Client) *usersvc.HTTPClient {
+    return usersvc.NewHTTPClient(httpClient, "http://localhost:8080")
+  }
 
 tests:
 - name: GetUser

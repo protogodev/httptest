@@ -194,21 +194,22 @@ func TestHTTPServer_GetUser(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			newServer := usersvc.NewHTTPServer
+
 			var out out
 			if err := serverCodec.Decode(tt.out, &out); err != nil {
 				t.Errorf("err when decoding Out: %v", err)
 			}
 
 			var gotIn in
-			svc := &ServiceMock{
+			resp := tt.request.ServedBy(newServer(&ServiceMock{
 				GetUserFunc: func(ctx context.Context, name string) (user *usersvc.User, err error) {
 					gotIn = in{
 						Name: name,
 					}
 					return out.User, out.Err
 				},
-			}
-			resp := tt.request.ServedBy(usersvc.NewHTTPServer(svc))
+			}))
 
 			encodedGotIn, err := serverCodec.Encode(gotIn)
 			if err != nil {
@@ -262,19 +263,20 @@ func TestHTTPServer_ListUsers(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			newServer := usersvc.NewHTTPServer
+
 			var out out
 			if err := serverCodec.Decode(tt.out, &out); err != nil {
 				t.Errorf("err when decoding Out: %v", err)
 			}
 
 			var gotIn in
-			svc := &ServiceMock{
+			resp := tt.request.ServedBy(newServer(&ServiceMock{
 				ListUsersFunc: func(ctx context.Context) (users []*usersvc.User, err error) {
 					gotIn = in{}
 					return out.Users, out.Err
 				},
-			}
-			resp := tt.request.ServedBy(usersvc.NewHTTPServer(svc))
+			}))
 
 			encodedGotIn, err := serverCodec.Encode(gotIn)
 			if err != nil {
@@ -342,21 +344,22 @@ func TestHTTPServer_CreateUser(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			newServer := usersvc.NewHTTPServer
+
 			var out out
 			if err := serverCodec.Decode(tt.out, &out); err != nil {
 				t.Errorf("err when decoding Out: %v", err)
 			}
 
 			var gotIn in
-			svc := &ServiceMock{
+			resp := tt.request.ServedBy(newServer(&ServiceMock{
 				CreateUserFunc: func(ctx context.Context, user *usersvc.User) (err error) {
 					gotIn = in{
 						User: user,
 					}
 					return out.Err
 				},
-			}
-			resp := tt.request.ServedBy(usersvc.NewHTTPServer(svc))
+			}))
 
 			encodedGotIn, err := serverCodec.Encode(gotIn)
 			if err != nil {
@@ -425,13 +428,15 @@ func TestHTTPServer_UpdateUser(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			newServer := usersvc.NewHTTPServer
+
 			var out out
 			if err := serverCodec.Decode(tt.out, &out); err != nil {
 				t.Errorf("err when decoding Out: %v", err)
 			}
 
 			var gotIn in
-			svc := &ServiceMock{
+			resp := tt.request.ServedBy(newServer(&ServiceMock{
 				UpdateUserFunc: func(ctx context.Context, name string, user *usersvc.User) (err error) {
 					gotIn = in{
 						Name: name,
@@ -439,8 +444,7 @@ func TestHTTPServer_UpdateUser(t *testing.T) {
 					}
 					return out.Err
 				},
-			}
-			resp := tt.request.ServedBy(usersvc.NewHTTPServer(svc))
+			}))
 
 			encodedGotIn, err := serverCodec.Encode(gotIn)
 			if err != nil {
@@ -506,21 +510,22 @@ func TestHTTPServer_DeleteUser(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			newServer := usersvc.NewHTTPServer
+
 			var out out
 			if err := serverCodec.Decode(tt.out, &out); err != nil {
 				t.Errorf("err when decoding Out: %v", err)
 			}
 
 			var gotIn in
-			svc := &ServiceMock{
+			resp := tt.request.ServedBy(newServer(&ServiceMock{
 				DeleteUserFunc: func(ctx context.Context, name string) (err error) {
 					gotIn = in{
 						Name: name,
 					}
 					return out.Err
 				},
-			}
-			resp := tt.request.ServedBy(usersvc.NewHTTPServer(svc))
+			}))
 
 			encodedGotIn, err := serverCodec.Encode(gotIn)
 			if err != nil {

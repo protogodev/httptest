@@ -192,13 +192,15 @@ func TestHTTPServer_{{.Name}}(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			newServer := {{$.Spec.Server}}
+
 			var out out
 			if err := serverCodec.Decode(tt.out, &out); err != nil {
 				t.Errorf("err when decoding Out: %v", err)
 			}
 
 			var gotIn in
-			svc := &{{$mockInterfaceName}}{
+			resp := tt.request.ServedBy(newServer(&{{$mockInterfaceName}}{
 				{{.Name}}Func: func({{$method.ArgList}}) {{$method.ReturnArgNamedValueList}} {
 					gotIn = in{
 						{{- range $nonCtxParams}}
@@ -207,8 +209,7 @@ func TestHTTPServer_{{.Name}}(t *testing.T) {
 					}
 					return {{fmtArgCSV $method.ReturnArgValueList "out.>Name"}}
 				},
-			}
-			resp := tt.request.ServedBy({{$.Spec.Server}}(svc))
+			}))
 
 			encodedGotIn, err := serverCodec.Encode(gotIn)
 			if err != nil {

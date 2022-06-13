@@ -91,9 +91,6 @@ func getImports(rawImports []string) (imports []Import, err error) {
 			return nil, fmt.Errorf("invalid path in imports[%d]: %s", i, str)
 		}
 
-		if !strings.HasPrefix(path, `"`) {
-			path = fmt.Sprintf("%q", path)
-		}
 		imports = append(imports, Import{
 			Path:  path,
 			Alias: alias,

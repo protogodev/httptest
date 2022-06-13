@@ -16,11 +16,11 @@ type HTTPClient struct {
 	baseURL    string
 }
 
-func NewHTTPClient(httpClient *http.Client, baseURL string) (*HTTPClient, error) {
+func NewHTTPClient(httpClient *http.Client, baseURL string) *HTTPClient {
 	return &HTTPClient{
 		httpClient: httpClient,
 		baseURL:    strings.TrimSuffix(baseURL, "/"),
-	}, nil
+	}
 }
 
 func (c *HTTPClient) GetUser(ctx context.Context, name string) (user *User, err error) {

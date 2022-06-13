@@ -51,7 +51,7 @@ func (i Import) ImportString() string {
 type Spec struct {
 	RawImports []string `yaml:"imports"`
 	Imports    []Import `yaml:"-"`
-	Client     string   `yaml:"handler"`
+	Client     string   `yaml:"client"`
 	Codec      string   `yaml:"codec"`
 	Tests      []Test   `yaml:"tests"`
 }
@@ -91,9 +91,6 @@ func getImports(rawImports []string) (imports []Import, err error) {
 			return nil, fmt.Errorf("invalid path in imports[%d]: %s", i, str)
 		}
 
-		if !strings.HasPrefix(path, `"`) {
-			path = fmt.Sprintf("%q", path)
-		}
 		imports = append(imports, Import{
 			Path:  path,
 			Alias: alias,
