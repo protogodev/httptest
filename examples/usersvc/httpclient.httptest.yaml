@@ -10,7 +10,7 @@ tests:
       method: GET
       path: /users/foo
     response:
-      statusCode: http.StatusOK
+      statusCode: 200
       body: '{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}'
     wantOut:
       user: {name: foo, sex: male, birth: 2022-01-01T00:00:00Z}
@@ -22,7 +22,7 @@ tests:
       method: GET
       path: /users/foo
     response:
-      statusCode: http.StatusBadRequest
+      statusCode: 400
       body: '{"error":"not found"}'
     wantOut:
       user: null
@@ -35,7 +35,7 @@ tests:
       method: GET
       path: /users
     response:
-      statusCode: http.StatusOK
+      statusCode: 200
       body: '{"users":[{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}]}'
     wantOut:
       users:
@@ -51,7 +51,7 @@ tests:
       path: /users
       body: '{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}'
     response:
-      statusCode: http.StatusNoContent
+      statusCode: 204
     wantOut:
       err: ''
   - name: err
@@ -62,7 +62,7 @@ tests:
       path: /users
       body: '{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}'
     response:
-      statusCode: http.StatusBadRequest
+      statusCode: 400
       body: '{"error":"already exists"}'
     wantOut:
       err: 'already exists'
@@ -77,7 +77,7 @@ tests:
       path: /users/foo
       body: '{"sex":"male","birth":"2022-01-01T00:00:00Z"}'
     response:
-      statusCode: http.StatusNoContent
+      statusCode: 204
     wantOut:
       err: ''
   - name: err
@@ -89,7 +89,7 @@ tests:
       path: /users/foo
       body: '{"sex":"male","birth":"2022-01-01T00:00:00Z"}'
     response:
-      statusCode: http.StatusBadRequest
+      statusCode: 400
       body: '{"error":"not found"}'
     wantOut:
       err: 'not found'
@@ -102,7 +102,7 @@ tests:
       method: DELETE
       path: /users/foo
     response:
-      statusCode: http.StatusNoContent
+      statusCode: 204
     wantOut:
       err: ''
   - name: err
@@ -112,7 +112,7 @@ tests:
       method: DELETE
       path: /users/foo
     response:
-      statusCode: http.StatusBadRequest
+      statusCode: 400
       body: '{"error":"not found"}'
     wantOut:
       err: 'not found'

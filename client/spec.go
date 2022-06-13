@@ -17,7 +17,7 @@ type request struct {
 }
 
 type response struct {
-	StatusCode string      `yaml:"statusCode"`
+	StatusCode int         `yaml:"statusCode"`
 	Header     http.Header `yaml:"header"`
 	Body       string      `yaml:"body"`
 }

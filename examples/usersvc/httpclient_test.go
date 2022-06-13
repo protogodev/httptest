@@ -134,7 +134,7 @@ func TestHTTPClient_GetUser(t *testing.T) {
 				Path:   "/users/foo",
 			},
 			response: ClientResponse{
-				StatusCode: http.StatusOK,
+				StatusCode: 200,
 				Body:       []byte(`{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}`),
 			},
 			wantOut: map[string]interface{}{"err": "", "user": map[interface{}]interface{}{"birth": "2022-01-01T00:00:00Z", "name": "foo", "sex": "male"}},
@@ -147,7 +147,7 @@ func TestHTTPClient_GetUser(t *testing.T) {
 				Path:   "/users/foo",
 			},
 			response: ClientResponse{
-				StatusCode: http.StatusBadRequest,
+				StatusCode: 400,
 				Body:       []byte(`{"error":"not found"}`),
 			},
 			wantOut: map[string]interface{}{"err": "not found", "user": interface{}(nil)},
@@ -219,7 +219,7 @@ func TestHTTPClient_ListUsers(t *testing.T) {
 				Path:   "/users",
 			},
 			response: ClientResponse{
-				StatusCode: http.StatusOK,
+				StatusCode: 200,
 				Body:       []byte(`{"users":[{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}]}`),
 			},
 			wantOut: map[string]interface{}{"err": "", "users": []interface{}{map[interface{}]interface{}{"birth": "2022-01-01T00:00:00Z", "name": "foo", "sex": "male"}}},
@@ -292,7 +292,7 @@ func TestHTTPClient_CreateUser(t *testing.T) {
 				Body:   []byte(`{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}`),
 			},
 			response: ClientResponse{
-				StatusCode: http.StatusNoContent,
+				StatusCode: 204,
 			},
 			wantOut: map[string]interface{}{"err": ""},
 		},
@@ -305,7 +305,7 @@ func TestHTTPClient_CreateUser(t *testing.T) {
 				Body:   []byte(`{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}`),
 			},
 			response: ClientResponse{
-				StatusCode: http.StatusBadRequest,
+				StatusCode: 400,
 				Body:       []byte(`{"error":"already exists"}`),
 			},
 			wantOut: map[string]interface{}{"err": "already exists"},
@@ -379,7 +379,7 @@ func TestHTTPClient_UpdateUser(t *testing.T) {
 				Body:   []byte(`{"sex":"male","birth":"2022-01-01T00:00:00Z"}`),
 			},
 			response: ClientResponse{
-				StatusCode: http.StatusNoContent,
+				StatusCode: 204,
 			},
 			wantOut: map[string]interface{}{"err": ""},
 		},
@@ -392,7 +392,7 @@ func TestHTTPClient_UpdateUser(t *testing.T) {
 				Body:   []byte(`{"sex":"male","birth":"2022-01-01T00:00:00Z"}`),
 			},
 			response: ClientResponse{
-				StatusCode: http.StatusBadRequest,
+				StatusCode: 400,
 				Body:       []byte(`{"error":"not found"}`),
 			},
 			wantOut: map[string]interface{}{"err": "not found"},
@@ -464,7 +464,7 @@ func TestHTTPClient_DeleteUser(t *testing.T) {
 				Path:   "/users/foo",
 			},
 			response: ClientResponse{
-				StatusCode: http.StatusNoContent,
+				StatusCode: 204,
 			},
 			wantOut: map[string]interface{}{"err": ""},
 		},
@@ -476,7 +476,7 @@ func TestHTTPClient_DeleteUser(t *testing.T) {
 				Path:   "/users/foo",
 			},
 			response: ClientResponse{
-				StatusCode: http.StatusBadRequest,
+				StatusCode: 400,
 				Body:       []byte(`{"error":"not found"}`),
 			},
 			wantOut: map[string]interface{}{"err": "not found"},

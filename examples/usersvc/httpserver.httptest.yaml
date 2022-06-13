@@ -13,7 +13,7 @@ tests:
       user: {name: foo, sex: male, birth: 2022-01-01T00:00:00Z}
       err: ''
     wantResponse:
-      statusCode: http.StatusOK
+      statusCode: 200
       body: '{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}'
   - name: err
     request:
@@ -25,7 +25,7 @@ tests:
       user: null
       err: 'not found'
     wantResponse:
-      statusCode: http.StatusBadRequest
+      statusCode: 400
       body: '{"error":"not found"}'
 - name: ListUsers
   subtests:
@@ -39,7 +39,7 @@ tests:
       - {name: foo, sex: male, birth: 2022-01-01T00:00:00Z}
       err: ''
     wantResponse:
-      statusCode: http.StatusOK
+      statusCode: 200
       body: '{"users":[{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}]}'
 - name: CreateUser
   subtests:
@@ -53,7 +53,7 @@ tests:
     out:
       err: ''
     wantResponse:
-      statusCode: http.StatusNoContent
+      statusCode: 204
   - name: err
     request:
       method: POST
@@ -64,7 +64,7 @@ tests:
     out:
       err: 'already exists'
     wantResponse:
-      statusCode: http.StatusBadRequest
+      statusCode: 400
       body: '{"error":"already exists"}'
 - name: UpdateUser
   subtests:
@@ -79,7 +79,7 @@ tests:
     out:
       err: ''
     wantResponse:
-      statusCode: http.StatusNoContent
+      statusCode: 204
   - name: err
     request:
       method: PATCH
@@ -91,7 +91,7 @@ tests:
     out:
       err: 'not found'
     wantResponse:
-      statusCode: http.StatusBadRequest
+      statusCode: 400
       body: '{"error":"not found"}'
 - name: DeleteUser
   subtests:
@@ -104,7 +104,7 @@ tests:
     out:
       err: ''
     wantResponse:
-      statusCode: http.StatusNoContent
+      statusCode: 204
   - name: err
     request:
       method: DELETE
@@ -114,5 +114,5 @@ tests:
     out:
       err: 'not found'
     wantResponse:
-      statusCode: http.StatusBadRequest
+      statusCode: 400
       body: '{"error":"not found"}'

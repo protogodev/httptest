@@ -173,7 +173,7 @@ func TestHTTPServer_GetUser(t *testing.T) {
 			wantIn: map[string]interface{}{"name": "foo"},
 			out:    map[string]interface{}{"err": "", "user": map[interface{}]interface{}{"birth": "2022-01-01T00:00:00Z", "name": "foo", "sex": "male"}},
 			wantResponse: ServerResponse{
-				StatusCode: http.StatusOK,
+				StatusCode: 200,
 				Body:       []byte(`{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}`),
 			},
 		},
@@ -186,7 +186,7 @@ func TestHTTPServer_GetUser(t *testing.T) {
 			wantIn: map[string]interface{}{"name": "foo"},
 			out:    map[string]interface{}{"err": "not found", "user": interface{}(nil)},
 			wantResponse: ServerResponse{
-				StatusCode: http.StatusBadRequest,
+				StatusCode: 400,
 				Body:       []byte(`{"error":"not found"}`),
 			},
 		},
@@ -254,7 +254,7 @@ func TestHTTPServer_ListUsers(t *testing.T) {
 			wantIn: map[string]interface{}(nil),
 			out:    map[string]interface{}{"err": "", "users": []interface{}{map[interface{}]interface{}{"birth": "2022-01-01T00:00:00Z", "name": "foo", "sex": "male"}}},
 			wantResponse: ServerResponse{
-				StatusCode: http.StatusOK,
+				StatusCode: 200,
 				Body:       []byte(`{"users":[{"name":"foo","sex":"male","birth":"2022-01-01T00:00:00Z"}]}`),
 			},
 		},
@@ -321,7 +321,7 @@ func TestHTTPServer_CreateUser(t *testing.T) {
 			wantIn: map[string]interface{}{"user": map[interface{}]interface{}{"birth": "2022-01-01T00:00:00Z", "name": "foo", "sex": "male"}},
 			out:    map[string]interface{}{"err": ""},
 			wantResponse: ServerResponse{
-				StatusCode: http.StatusNoContent,
+				StatusCode: 204,
 			},
 		},
 		{
@@ -334,7 +334,7 @@ func TestHTTPServer_CreateUser(t *testing.T) {
 			wantIn: map[string]interface{}{"user": map[interface{}]interface{}{"birth": "2022-01-01T00:00:00Z", "name": "foo", "sex": "male"}},
 			out:    map[string]interface{}{"err": "already exists"},
 			wantResponse: ServerResponse{
-				StatusCode: http.StatusBadRequest,
+				StatusCode: 400,
 				Body:       []byte(`{"error":"already exists"}`),
 			},
 		},
@@ -404,7 +404,7 @@ func TestHTTPServer_UpdateUser(t *testing.T) {
 			wantIn: map[string]interface{}{"name": "foo", "user": map[interface{}]interface{}{"birth": "2022-01-01T00:00:00Z", "sex": "male"}},
 			out:    map[string]interface{}{"err": ""},
 			wantResponse: ServerResponse{
-				StatusCode: http.StatusNoContent,
+				StatusCode: 204,
 			},
 		},
 		{
@@ -417,7 +417,7 @@ func TestHTTPServer_UpdateUser(t *testing.T) {
 			wantIn: map[string]interface{}{"name": "foo", "user": map[interface{}]interface{}{"birth": "2022-01-01T00:00:00Z", "sex": "male"}},
 			out:    map[string]interface{}{"err": "not found"},
 			wantResponse: ServerResponse{
-				StatusCode: http.StatusBadRequest,
+				StatusCode: 400,
 				Body:       []byte(`{"error":"not found"}`),
 			},
 		},
@@ -486,7 +486,7 @@ func TestHTTPServer_DeleteUser(t *testing.T) {
 			wantIn: map[string]interface{}{"name": "foo"},
 			out:    map[string]interface{}{"err": ""},
 			wantResponse: ServerResponse{
-				StatusCode: http.StatusNoContent,
+				StatusCode: 204,
 			},
 		},
 		{
@@ -498,7 +498,7 @@ func TestHTTPServer_DeleteUser(t *testing.T) {
 			wantIn: map[string]interface{}{"name": "foo"},
 			out:    map[string]interface{}{"err": "not found"},
 			wantResponse: ServerResponse{
-				StatusCode: http.StatusBadRequest,
+				StatusCode: 400,
 				Body:       []byte(`{"error":"not found"}`),
 			},
 		},

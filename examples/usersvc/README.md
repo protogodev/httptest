@@ -7,11 +7,11 @@ This example illustrates how to apply HTTP testing for a layered Web application
 
 1. Write the test specification for the HTTP server
 
-    See [httptest.server.yaml](httptest.server.yaml).
+    See [httpserver.httptest.yaml](httpserver.httptest.yaml).
 
 2. Write the test specification for the HTTP client
 
-    See [httptest.client.yaml](httptest.client.yaml).
+    See [httpclient.httptest.yaml](httpclient.httptest.yaml).
 
 
 ## Generate tests

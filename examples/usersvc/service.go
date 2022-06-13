@@ -7,8 +7,8 @@ import (
 	"time"
 )
 
-//go:generate protogo httptest ./service.go Service --mode=server --spec=./httptest.server.yaml --out=./httpserver_test.go
-//go:generate protogo httptest ./service.go Service --mode=client --spec=./httptest.client.yaml --out=./httpclient_test.go
+//go:generate protogo httptest ./service.go Service --mode=server --spec=./httpserver.httptest.yaml --out=./httpserver_test.go
+//go:generate protogo httptest ./service.go Service --mode=client --spec=./httpclient.httptest.yaml --out=./httpclient_test.go
 
 type Service interface {
 	GetUser(ctx context.Context, name string) (user *User, err error)
